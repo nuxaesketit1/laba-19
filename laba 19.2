@@ -1,0 +1,74 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() {
+
+	setlocale(0, "");
+
+	int m, n, max_j = 0, min_j = 0;
+	double min, max;
+
+	do {
+
+		cout << "Введите количество строк и столбцов в матрице M x N ( M,N > 0) : ";
+		cin >> m >> n;
+		cout << endl;
+
+	} while ((m < 0) || (n < 0));
+
+	double** matrix = new double*[m];
+	for (int i = 0; i < m; i++) {
+		matrix[i] = new double[n];
+	}
+
+	cout << "Введите каждый элемент матрицы : " << endl;
+
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> matrix[i][j];
+		}
+	}
+
+	max = matrix[0][0];
+	min = matrix[0][0];
+
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+
+			if (matrix[i][j] > max) {
+				max = matrix[i][j];
+				max_j = j;
+			}
+			if (matrix[i][j] < min) {
+				min = matrix[i][j];
+				min_j = j;
+			}
+
+		}
+	}
+
+	if (max_j > min_j) {
+		for (int i = 0; i < m; i++) {
+			swap(matrix[i][min_j], matrix[i][max_j]);
+		}
+	}
+	else {
+		for (int i = 0; i < m; i++) {
+			swap(matrix[i][max_j], matrix[i][min_j]);
+		}
+	}
+
+	cout << "Результат : " << endl;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			cout << matrix[i][j] << ends;
+		}
+		cout << endl;
+	}
+
+	cout << endl;
+	system("pause");
+	return 0;
+
+}
