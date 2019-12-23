@@ -1,41 +1,75 @@
-using namespace std;
 #include <iostream>
-int main() {
-	setlocale(LC_ALL, "Russian");
-	int N, M, i, j, minb, maxb, a, min, max;
-	cout << "M: "; cin >> M;
-	cout << "N: "; cin >> N;
-	int** A = new int* [M];
-	max = 0; min = 9999999;
-	cout << "Элементы массива: " << endl;
-	for (i = 1; i <= M; i++) {
-		A[i] = new int[N];
-		for (j = 1; j <= N; j++) {
-			cout << "A[" << i << "][" << j << "]: ";
-			cin >> A[i][j];
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+	
+	cout << "Vvedite razmer matrici" << endl;
+	int m, n;
+	cin >> m >> n;
+
+	vector < vector <int> > matrix(m, vector <int>(n));
+
+	cout << "Vvedite matrix" << endl;
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			cin >> matrix[i][j];
 		}
 	}
-	for (i = 1; i <= M; i++) {
-		for (j = 1; j <= N; j++) {
-			if (A[i][j] < min) { min = A[i][j]; minb = j; }
-			if (A[i][j] > max) { max = A[i][j]; maxb = j; }
-		}
-	}
-	cout << "MAX - " << max << endl;
-	cout << "MIN - " << min << endl;
-	for (i = 1; i <= M; i++) {
-			a = A[i][minb];
-			A[i][minb] = A[i][maxb];
-			A[i][maxb] = a;
-	}
-	cout << "Получившаяся матрица: " << endl;
-	for (i = 1; i <= M; i++) {
-		for (j = 1; j <= N; j++) {
-			cout << A[i][j] << "\t";
-			if (j % N == 0)
-				cout << endl;
+	
+	vector<int> izmit(m);
+
+	int min = 24898980;
+	int max = -32857034;
+	int min_n;
+	int max_n;
+
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (matrix[i][j] > max)
+			{
+				max = matrix[i][j];
+				max_n = j;
+			}
+
+			if (matrix[i][j] < min)
+			{
+				min = matrix[i][j];
+				min_n = j;
+			}
 		}
 	}
 
+	for (int i = 0; i < m; i++)
+	{
+		izmit[i] = matrix[i][max_n];
+	}
+
+	for (int i = 0; i < m; i++)
+	{
+		matrix[i][max_n] = matrix[i][min_n];
+	}
+
+	for (int i = 0; i < m; i++)
+	{
+		matrix[i][min_n] = izmit[i];
+	}
+
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			cout << matrix[i][j] << " " ;
+		}
+		cout << endl;
+	}
+	
 	return 0;
+
 }
